@@ -56,6 +56,21 @@
           ];
         };
 
+
+        dfa-mutate = pkgs.python310Packages.buildPythonPackage rec {
+          pname = "dfa_mutate";
+          version = "0.1.3";
+          format = "wheel";
+          src = pkgs.python310Packages.fetchPypi rec {
+            inherit pname version format;
+            sha256 = "abe00e8afb4b7bf164806d3696caa1e511b2e869ac272f22b8e8afee4018d5ed";
+            dist = python;
+            python = "py3";
+          };
+          propagatedBuildInputs = [ dfa ];
+        };
+
+
         py-aiger = pkgs.python310Packages.buildPythonPackage rec {
           pname = "py_aiger";
           version = "6.2.3";
@@ -379,6 +394,23 @@
           ];
         };
 
+        jraph = pkgs.python310Packages.buildPythonPackage rec {
+          pname = "jraph";
+          version = "0.0.6.dev0";
+          format = "wheel";
+          src = pkgs.python310Packages.fetchPypi rec {
+            inherit pname version format;
+            sha256 = "350fe37bf717f934f1f84fd3370a480b3178bfcb61dfa217c738971308c57625";
+            dist = python;
+            python = "py3";
+          };
+          propagatedBuildInputs = [
+            pkgs.python310Packages.jax
+            pkgs.python310Packages.jaxlib-bin
+            pkgs.python310Packages.numpy
+          ];
+        };
+
         pkgs = import nixpkgs {
           inherit system;
           config = {
@@ -395,6 +427,7 @@
           equinox
           jax
           jaxlib-bin
+          jraph
           numpy
           pandas
           py-aiger
@@ -408,6 +441,7 @@
           py-aiger-dfa
           py-aiger-gridworld
           dfa-identify
+          dfa-mutate
           diss
 	      #pkgs.python3Packages.pip
           #dfa
@@ -422,6 +456,7 @@
           pkgs.python310Packages.flit
           pkgs.python310Packages.ptpython
           pkgs.python310Packages.jupyterlab
+          pkgs.python310Packages.jupytext
           pkgs.graphviz
         ];
       };
